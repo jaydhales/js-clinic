@@ -58,17 +58,16 @@ const runMath = (value) => {
         }
       }),
     ];
-    printResult(inputArr[0]);
   }
   input = "";
   fn = value;
+  printResult(input || inputArr[0]);
 };
 
 const runCalc = () => {
   runMath("");
   inputArr = [];
   printInput("");
-  console.log(inputArr);
 };
 
 const printInput = () => (display.innerHTML = input);
