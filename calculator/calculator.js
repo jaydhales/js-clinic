@@ -1,6 +1,6 @@
 const buttons = document.querySelectorAll("button");
-const display = document.querySelector(".display");
-const result = document.querySelector(".result");
+const display = document.querySelector(".display .text");
+const result = document.querySelector(".result .text");
 let input = "";
 let inputArr = [];
 let fn = "";

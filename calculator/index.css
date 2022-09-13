@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
 @font-face {
   font-family: "technology";
   src: url("./assets/technology.ttf");
@@ -14,12 +16,20 @@ body {
   place-content: center;
   min-height: 100vh;
   background: #201f1f;
+  color: #fff;
+}
+
+h2 {
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-family: "Pacifico", cursive;
 }
 
 main {
   width: 320px;
   background: #454545;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  border-radius: 25px;
 }
 
 button {
@@ -28,10 +38,10 @@ button {
   border-radius: 15px;
   box-shadow: 0 3px 6px #0005;
   background: #474747;
-  color: #fff;
   cursor: pointer;
   font-weight: 500;
   font-size: 1rem;
+  color: #fff;
 }
 
 button:active {
@@ -39,13 +49,9 @@ button:active {
   box-shadow: 0 1px 4px #000;
 }
 
-.fn {
-  background: #5f5f5f;
-}
-
 .output {
   padding: 0.5rem;
-  border: 8px solid #111;
+  border: 4px solid rgba(126, 126, 126, 0.6);
   border-radius: 10px;
   background: #20270773;
   height: 100px;
@@ -55,7 +61,7 @@ button:active {
   text-align: right;
   color: green;
   font-family: "technology", serif;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.253);
+  text-shadow: 0 0 1px rgb(0, 38, 255);
 }
 
 .output > div {
@@ -70,9 +76,9 @@ button:active {
   font-size: 45px;
 }
 
-p {
+p:not(.text) {
   position: absolute;
-  opacity: 0.05;
+  opacity: 0.1;
   right: 0;
   top: 0;
 }
@@ -87,16 +93,34 @@ p {
 
 #clear {
   grid-area: 1 / 1 / 2 / 2;
+  background: #912727;
 }
 #sign {
   grid-area: 1 / 2 / 2 / 3;
+  background: #64571e;
 }
 #divide {
   grid-area: 1 / 3 / 2 / 4;
+  background: #4f641e;
 }
 #multiply {
   grid-area: 1 / 4 / 2 / 5;
+  background: #c0bd1779;
 }
+#minus {
+  grid-area: 2 / 4 / 3 / 5;
+  background: #4f641e;
+}
+#add {
+  grid-area: 3 / 4 / 4 / 5;
+  background: #64571e;
+}
+#equal {
+  grid-area: 4 / 4 / 6 / 5;
+  background: #912727;
+  font-weight: 700;
+}
+
 #seven {
   grid-area: 2 / 1 / 3 / 2;
 }
@@ -129,15 +153,4 @@ p {
 }
 #dot {
   grid-area: 5 / 3 / 6 / 4;
-}
-#minus {
-  grid-area: 2 / 4 / 3 / 5;
-}
-#add {
-  grid-area: 3 / 4 / 4 / 5;
-}
-#equal {
-  grid-area: 4 / 4 / 6 / 5;
-  background: #586e4f;
-  font-weight: 700;
 }
