@@ -62,6 +62,12 @@ button:active {
   color: green;
   font-family: "technology", serif;
   text-shadow: 0 0 1px rgb(0, 38, 255);
+  position: relative;
+}
+
+span {
+  position: absolute;
+  top: 5px;
 }
 
 .output > div {
@@ -95,7 +101,7 @@ p:not(.text) {
   grid-area: 1 / 1 / 2 / 2;
   background: #912727;
 }
-#sign {
+#delete {
   grid-area: 1 / 2 / 2 / 3;
   background: #64571e;
 }
