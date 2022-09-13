@@ -14,6 +14,7 @@ buttons.forEach(
             input = "";
             inputArr = [];
             fn = "";
+            printResult("");
             break;
           case "sign":
             input *= -1;
@@ -57,11 +58,16 @@ const runMath = (value) => {
         }
       }),
     ];
+    printResult(inputArr[0]);
   }
   input = "";
   fn = value;
+};
 
-  // printResult(inputArr[0]);
+const runCalc = () => {
+  runMath("");
+  inputArr = [];
+  printInput("");
   console.log(inputArr);
 };
 
