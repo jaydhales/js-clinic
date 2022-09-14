@@ -10,6 +10,8 @@ const info = {
   result: "",
 };
 let operator = "";
+let lastResult;
+let isCalc = false;
 
 buttons.forEach(
   (btn) =>
@@ -22,6 +24,11 @@ buttons.forEach(
         handleArithmetics(btn.id);
       } else {
         // add number to input
+        if (isCalc) {
+          info.data = "";
+          isCalc = false;
+          prevInput = "";
+        }
         input += btn.innerText;
         runDisplay("");
         signIcon.innerText = "";
@@ -36,22 +43,21 @@ const handleArithmetics = (value) => {
   switch (value) {
     case "delete":
       input = input.slice(0, -1);
+      printInput(input);
       break;
     case "equal":
-      if (prevInput == "") {
-        calculate(input, "add", 0, true);
-      } else {
-        calculate(prevInput, operator, input, true);
-      }
+      calculate(prevInput, operator, input, true);
+
       break;
 
     default:
       runMath(value);
+      isCalc = false;
   }
 };
 
 const runMath = (value) => {
-  if (prevInput !== "") {
+  if (prevInput !== "" && input !== "") {
     calculate(prevInput, operator, input, false);
   } else {
     prevInput = input;
@@ -63,46 +69,49 @@ const runMath = (value) => {
 };
 
 const calculate = (prev, value, current, isEqual) => {
-  let result;
   prev = parseFloat(prev);
   current = parseFloat(current);
+  if (isNaN(current)) {
+    runDisplay("ERROR");
+    return;
+  }
   switch (value) {
     case "divide":
-      result = prev / current;
-      info.data += "/";
+      info.data += `/${current}`;
       break;
 
     case "add":
-      result = prev + current;
-      info.data += "+";
+      info.data += `+${current}`;
       break;
 
     case "minus":
-      result = prev - current;
-      info.data += "-";
+      info.data += `-${current}`;
       break;
 
     case "multiply":
-      result = prev * current;
-      info.data += "x";
+      info.data += `*${current}`;
       break;
 
     default:
       break;
   }
-  info.data += current;
-  runDisplay(result);
+
+  try {
+    if (info.data !== "") info.result = eval(info.data);
+    runDisplay(info.result);
+    inputHistory.push({ ...info });
+
+    lastResult = inputHistory[inputHistory.length - 1];
+  } catch (error) {
+    runDisplay("ERROR");
+  }
 
   if (isEqual) {
-    info.result = result;
-    inputHistory.push({ ...info });
-    let disp = inputHistory[inputHistory.length - 1].data;
-    printInput(disp);
-
-    clearAll();
-  } else {
-    prevInput = result;
+    printInput(lastResult.data);
+    clearAll(isEqual);
   }
+
+  info.data = lastResult.result;
 };
 
 const runDisplay = (value) => {
@@ -111,11 +120,16 @@ const runDisplay = (value) => {
 
 const printInput = (input) => (display.innerHTML = input);
 
-const clearAll = () => {
-  input = "";
-  operator = "";
-  prevInput = "";
+const clearAll = (bool) => {
   signIcon.innerText = "";
-  info.data = "";
+  operator = "";
   info.result = "";
+  input = "";
+  if (!bool) {
+    prevInput = "";
+    info.data = "";
+    printInput("");
+  } else {
+    isCalc = true;
+  }
 };
