@@ -104,7 +104,7 @@ const calculate = (prev, value, current, isEqual) => {
     prevInput = result;
   }
 };
-//jh
+
 const runDisplay = (value) => {
   result.innerHTML = value;
 };
