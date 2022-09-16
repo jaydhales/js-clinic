@@ -1,0 +1,19 @@
+.lot {
+  display: flex;
+  flex-wrap: wrap;
+  width: 550px;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.slot {
+  width: 100px;
+  height: 50px;
+  border: 1px solid;
+  display: grid;
+  place-content: center;
+}
+
+.booked {
+  background-color: yellow;
+}
