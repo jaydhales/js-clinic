@@ -1,4 +1,5 @@
 const lot = document.querySelector(".lot");
+form = document.querySelector("form");
 const booked = document.querySelector("#total-slots span");
 const bookedAlert = document.querySelector(".alert");
 let bookedNum = 0;
@@ -38,6 +39,8 @@ form.onsubmit = (e) => {
     type: form.elements['type'].value,
     timeIn: new Date(),
   }
+
+console.log(formData)
   
 }
 
