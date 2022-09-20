@@ -16,21 +16,21 @@
       <label for="name">
         Name of Vehicle owner:
          </label>
-        <input id="name" type="text" placeholder="Jane Doe" />
+        <input id="name" type="text" placeholder="Jane Doe" required/>
  
       <label for="reg">
         Registration Number: 
          </label>
-        <input id="reg" type="text" placeholder="ABC-123-DE" />
+        <input id="reg" type="text" placeholder="ABC-123-DE" required/>
      
         <label for="type">Vehicle Type</label>
-      <select id="type" >
-        <option default>-- --</option>
+      <select id="type" required>
+        <option value="" default>-- --</option>
         <option value="large">Large</option>
         <option value="small">Small</option>
       </select>
       
-      <input type="submit" value="Book now">
+      <input type="submit" value="Book now" required>
     </form>
     <main>
       <p id="total-slots">Booked Slots: <span></span> out of 20</p>
