@@ -29,6 +29,18 @@ slots.forEach((slot) => {
   };
 });
 
+form.onsubmit = (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    name: form.elements['name'].value,
+    regNum: form.elements['reg'].value,
+    type: form.elements['type'].value,
+    timeIn: new Date(),
+  }
+  
+}
+
 const updateDom = () => {
   booked.innerHTML = bookedNum;
   bookedNum === 20
