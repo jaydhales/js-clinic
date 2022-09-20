@@ -13,24 +13,26 @@
     </header>
     <form>
       <h4>Book a slot here</h4>
-      <label for="name">
-        Name of Vehicle owner:
-         </label>
-        <input id="name" type="text" placeholder="Jane Doe" required/>
- 
-      <label for="reg">
-        Registration Number: 
-         </label>
-        <input id="reg" type="text" placeholder="ABC-123-DE" required/>
-     
-        <label for="type">Vehicle Type</label>
-      <select id="type" required>
-        <option value="" default>-- --</option>
-        <option value="large">Large</option>
-        <option value="small">Small</option>
-      </select>
-      
-      <input type="submit" value="Book now" required>
+      <div class="form-group">
+        <label for="name"> Name of Vehicle owner: </label><br />
+        <input id="name" type="text" placeholder="Jane Doe" required />
+      </div>
+
+      <div class="form-group">
+        <label for="reg"> Registration Number: </label><br />
+        <input id="reg" type="text" placeholder="ABC-123-DE" required />
+      </div>
+
+      <div class="form-group">
+        <label for="type">Vehicle Type</label><br />
+        <select id="type" required>
+          <option value="" default>-- --</option>
+          <option value="large">Large</option>
+          <option value="small">Small</option>
+        </select>
+      </div>
+
+      <input type="submit" value="Book now" required />
     </form>
     <main>
       <p id="total-slots">Booked Slots: <span></span> out of 20</p>

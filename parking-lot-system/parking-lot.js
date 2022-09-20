@@ -1,3 +1,5 @@
+if (!localStorage.bookings) localStorage.bookings = JSON.stringify([]);
+const bookings = JSON.parse(localStorage.bookings);
 const lot = document.querySelector(".lot");
 form = document.querySelector("form");
 const booked = document.querySelector("#total-slots span");
@@ -5,8 +7,11 @@ const bookedAlert = document.querySelector(".alert");
 let bookedNum = 0;
 
 // create slots from Js
-for (let i = 0; i < 20; i++) {
-  lot.innerHTML += '<div class="slot" />';
+for (let i = 0; i < 12; i++) {
+  lot.innerHTML += '<div class="slot large" />';
+}
+for (let i = 0; i < 8; i++) {
+  lot.innerHTML += '<div class="slot small" />';
 }
 
 let slots = document.querySelectorAll(".slot");
@@ -32,17 +37,23 @@ slots.forEach((slot) => {
 
 form.onsubmit = (e) => {
   e.preventDefault();
-  
-  const formData = {
-    name: form.elements['name'].value,
-    regNum: form.elements['reg'].value,
-    type: form.elements['type'].value,
-    timeIn: new Date(),
-  }
+  const isBooked = confirm("Do you want to book a slot");
 
-console.log(formData)
-  
-}
+  if (!isBooked) return null;
+
+  const formData = {
+    name: form.elements["name"].value,
+    regNum: form.elements["reg"].value,
+    type: form.elements["type"].value,
+    timeIn: new Date().getDate(),
+  };
+
+  bookings.push(formData);
+
+  localStorage.bookings = JSON.stringify(bookings);
+
+  form.clear()
+};
 
 const updateDom = () => {
   booked.innerHTML = bookedNum;
