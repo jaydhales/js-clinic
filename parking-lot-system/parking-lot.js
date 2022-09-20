@@ -45,14 +45,14 @@ form.onsubmit = (e) => {
     name: form.elements["name"].value,
     regNum: form.elements["reg"].value,
     type: form.elements["type"].value,
-    timeIn: new Date().getDate(),
+    timeIn: new Date().getTime(),
   };
 
   bookings.push(formData);
 
   localStorage.bookings = JSON.stringify(bookings);
 
-  form.clear()
+  form.clear();
 };
 
 const updateDom = () => {
