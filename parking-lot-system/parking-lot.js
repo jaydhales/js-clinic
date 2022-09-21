@@ -6,6 +6,8 @@ const booked = document.querySelector("#total-slots span");
 const bookedAlert = document.querySelector(".alert");
 const dialog = document.querySelector(".dialog");
 let checkoutBtns;
+let payBtn;
+let cancelBtn;
 let bookedNum = 0;
 
 // create slotSections from Js
@@ -106,13 +108,6 @@ const handleCheckout = () => {
       (btn.onclick = (e) => {
         e.preventDefault();
         handlePayment(e.target.parentElement.id);
-
-        // bookings = bookings.filter(
-        //   (booking) => booking.regNum !== e.target.parentElement.id
-        // );
-
-        // localStorage.bookings = JSON.stringify(bookings);
-        // updateDom();
       })
   );
 };
@@ -127,9 +122,14 @@ const handlePayment = (id) => {
 
   const totalBill = pricePerTime * (minuteSpent + Math.round(seconds / 60)); // >30sec = 1mins, otherwise 0
 
-  runPaymentDialog(currentSlot, minuteSpent, seconds, pricePerTime, totalBill);
-
-  console.log({ minuteSpent, seconds, pricePerTime, totalBill });
+  runPaymentDialog(
+    currentSlot,
+    minuteSpent,
+    seconds,
+    pricePerTime,
+    totalBill,
+    id
+  );
 };
 
 const runPaymentDialog = (
@@ -137,7 +137,8 @@ const runPaymentDialog = (
   minutes,
   seconds,
   pricePerTime,
-  totalBill
+  totalBill,
+  id
 ) => {
   dialog.innerHTML = `<div class='dialog-box'>
     <h4>Thanks you for choosing us</h4>
@@ -149,8 +150,32 @@ const runPaymentDialog = (
     <p>Time Spent: ${minutes} minutes, ${seconds} seconds </p>
 
     <p>Total Bill: ₦${totalBill}</p>
-    <div> </div>
+    <div class='cancel-pay'> 
+      <a href='#' class='cancel-btn'>not yet</a>
+      <a href='#' class='pay-btn'>Pay now</a>
+    </div>
   </div>`;
+
+  payBtn = document.querySelector(".pay-btn");
+  cancelBtn = document.querySelector(".cancel-btn");
+
+  closePayment(dialog, id);
+};
+
+const closePayment = (dialog, id) => {
+  payBtn.onclick = (e) => {
+    e.preventDefault();
+    dialog.innerHTML = "";
+
+    bookings = bookings.filter((booking) => booking.regNum !== id);
+
+    localStorage.bookings = JSON.stringify(bookings);
+    updateDom();
+  };
+  cancelBtn.onclick = (e) => {
+    e.preventDefault();
+    dialog.innerHTML = "";
+  };
 };
 
 window.onload = updateDom();
