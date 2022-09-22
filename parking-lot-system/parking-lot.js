@@ -1,9 +1,13 @@
 if (!localStorage.bookings) localStorage.bookings = JSON.stringify([]);
-const bookings = JSON.parse(localStorage.bookings);
+let bookings = JSON.parse(localStorage.bookings);
 const slotSection = document.querySelector(".lot");
 const form = document.querySelector("form");
 const booked = document.querySelector("#total-slots span");
 const bookedAlert = document.querySelector(".alert");
+const dialog = document.querySelector(".dialog");
+let checkoutBtns;
+let payBtn;
+let cancelBtn;
 let bookedNum = 0;
 
 // create slotSections from Js
@@ -14,8 +18,9 @@ for (let i = 0; i < 8; i++) {
   slotSection.innerHTML += '<div class="slot large" />';
 }
 
-let smallSlots = document.querySelectorAll(".slot.small");
-let largeSlots = document.querySelectorAll(".slot.large");
+const allSlots = document.querySelectorAll(".slot");
+const smallSlots = document.querySelectorAll(".slot.small");
+const largeSlots = document.querySelectorAll(".slot.large");
 
 form.onsubmit = (e) => {
   e.preventDefault();
@@ -62,14 +67,21 @@ const updateDom = () => {
     bookedAlert.classList.remove("visible");
     disableForm(false);
   }
+
+  checkoutBtns = document.querySelectorAll(".unbook");
+  handleCheckout();
 };
 
 const updateBooking = () => {
+  allSlots.forEach((slot) => (slot.innerHTML = ""));
+  //  All slots cleared for re-update
+
   const smallFilled = bookings.filter((slot) => slot.type === "small");
   const largeFilled = bookings.filter((slot) => slot.type === "large");
   const updateSlot = (slot, booking) =>
-    (slot.innerHTML = `<div>
+    (slot.innerHTML = `<div id=${booking.regNum} class='booked'>
         <p>${booking.type}</p>
+        <a href="#" class='unbook'>Checkout</a>
         </div>`);
 
   bookings.forEach((booking) => {
@@ -88,23 +100,82 @@ const updateBooking = () => {
   });
 };
 
-window.onload = updateDom();
+const handleCheckout = () => {
+  // const shouldClear = confirm("Do you want to clear");
 
-// slots.forEach((slot) => {
-//   slot.onclick = (e) => {
-//     const elem = e.target;
-//     if (elem.id === "") {
-//       const reg = "CBE-" + (Math.floor(Math.random() * 899) + 100);
-//       elem.id = reg;
-//       elem.classList.add("booked");
-//       elem.innerHTML = reg;
-//       bookedNum++;
-//     } else {
-//       elem.id = "";
-//       elem.classList.remove("booked");
-//       elem.innerHTML = "";
-//       bookedNum--;
-//     }
-//     updateDom();
-//   };
-// });
+  checkoutBtns.forEach(
+    (btn) =>
+      (btn.onclick = (e) => {
+        e.preventDefault();
+        handlePayment(e.target.parentElement.id);
+      })
+  );
+};
+
+const handlePayment = (id) => {
+  const currentSlot = bookings.filter((booking) => booking.regNum == id)[0];
+  const timeOut = new Date().getTime();
+  const timeSpent = new Date(timeOut - currentSlot.timeIn);
+  const minuteSpent = timeSpent.getMinutes();
+  const seconds = timeSpent.getSeconds();
+  const pricePerTime = currentSlot.type === "large" ? 4 : 2;
+
+  const totalBill = pricePerTime * (minuteSpent + Math.round(seconds / 60)); // >30sec = 1mins, otherwise 0
+
+  runPaymentDialog(
+    currentSlot,
+    minuteSpent,
+    seconds,
+    pricePerTime,
+    totalBill,
+    id
+  );
+};
+
+const runPaymentDialog = (
+  currentSlot,
+  minutes,
+  seconds,
+  pricePerTime,
+  totalBill,
+  id
+) => {
+  dialog.innerHTML = `<div class='dialog-box'>
+    <h4>Thanks you for choosing us</h4>
+    <p>Your Bill</p>
+    <p>Name: ${currentSlot.name}</p>
+    <p>Reg: ${currentSlot.regNum}</p>
+    <p>Vehicle Type: ${currentSlot.type}</p>
+    <p>Price Unit: ₦${pricePerTime}/minutes</p>
+    <p>Time Spent: ${minutes} minutes, ${seconds} seconds </p>
+
+    <p>Total Bill: ₦${totalBill}</p>
+    <div class='cancel-pay'> 
+      <a href='#' class='cancel-btn'>not yet</a>
+      <a href='#' class='pay-btn'>Pay now</a>
+    </div>
+  </div>`;
+
+  payBtn = document.querySelector(".pay-btn");
+  cancelBtn = document.querySelector(".cancel-btn");
+
+  closePayment(dialog, id);
+};
+
+const closePayment = (dialog, id) => {
+  payBtn.onclick = (e) => {
+    e.preventDefault();
+    dialog.innerHTML = "";
+
+    bookings = bookings.filter((booking) => booking.regNum !== id);
+
+    localStorage.bookings = JSON.stringify(bookings);
+    updateDom();
+  };
+  cancelBtn.onclick = (e) => {
+    e.preventDefault();
+    dialog.innerHTML = "";
+  };
+};
+
+window.onload = updateDom();

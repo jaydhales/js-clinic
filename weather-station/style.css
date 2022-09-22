@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: url("./bg.jpg") top no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+body > h1 {
+  text-align: center;
+}
+
+form {
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+  max-width: 300px;
+  margin: auto;
+}
+
+form * {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.box {
+  background: #0000;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 0.5s;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.btn:hover {
+  background: #94dbe775;
+}
+
+.btn:active {
+  background: #aadfe9;
+  transform: scale(0.9);
+}
+
+.error {
+  box-shadow: 0 0 5px 2px red;
+  padding: 0 1rem;
+  text-align: center;
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+#city {
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #aadfe9;
+}
+
+input::placeholder {
+  color: #000;
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.output-container {
+  position: relative;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  min-width: 0;
+  width: 400px;
+  height: 200px;
+  background-position: top left;
+  background-size: 150%;
+}
+
+.day {
+  background-image: linear-gradient(to bottom, #0006, #fff8), url("./day.jpg");
+}
+.night {
+  background-image: linear-gradient(to bottom, #0006, #000d), url("./night.jpg");
+  color: white;
+}
+
+img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100px;
+}
+
+.result p {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+}
