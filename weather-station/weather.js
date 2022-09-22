@@ -1,5 +1,6 @@
 const form = document.querySelector("form");
 const resultDiv = document.querySelector(".result");
+const errorDiv = document.querySelector(".error");
 
 const renderData = (data) => {
   const iconUrl = "http://openweathermap.org/img/wn/";
@@ -29,26 +30,46 @@ form.onsubmit = (e) => {
   e.preventDefault();
   const city = form.elements["city"].value;
 
+  form.reset();
+
   fetchData(city);
 };
 
 const fetchData = async (city) => {
-  const response = await axios({
-    method: "get",
-    url: "https://api.openweathermap.org/data/2.5/weather",
-    params: {
-      q: city,
-      appid: "d2a68d69815b93fa7661e4cdda6a99db",
-      units: "metric",
-    },
-  });
+  try {
+    const response = await axios({
+      method: "get",
+      url: "https://api.openweathermap.org/data/2.5/weather",
+      params: {
+        q: city,
+        appid: "d2a68d69815b93fa7661e4cdda6a99db",
+        units: "metric",
+      },
+    });
 
-  showResult(response.data);
-  form.reset();
+    showResult(response.data);
+  } catch (error) {
+    console.log(error);
+    if (error.request.status === 404) {
+      showError(`<p>Weather for ${city} not found</p>`);
+    } else {
+      showError(error.message);
+    }
+  }
 };
 
 const showResult = (data) => {
   resultDiv.innerHTML += renderData(data);
+};
+
+const showError = (message) => {
+  errorDiv.innerHTML = message;
+  errorDiv.classList.add("active");
+
+  setTimeout(() => {
+    errorDiv.innerHTML = "";
+    errorDiv.classList.remove("active");
+  }, 5000);
 };
 
 // For building purpose

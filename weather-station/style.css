@@ -23,16 +23,49 @@ form {
   margin: auto;
 }
 
-input {
+form * {
   width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.box {
+  background: #0000;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: background 0.5s;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.btn:hover {
+  background: #94dbe775;
+}
+
+.btn:active {
+  background: #aadfe9;
+  transform: scale(0.9);
+}
+
+.error {
+  box-shadow: 0 0 5px 2px red;
+  padding: 0 1rem;
+  text-align: center;
+  display: none;
+}
+
+.active {
+  display: block;
 }
 
 #city {
   background: none;
-  padding: 0.3rem 1rem;
   border: none;
   outline: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid #aadfe9;
 }
 
 input::placeholder {
@@ -72,7 +105,7 @@ img {
   height: 100px;
 }
 
-p {
+.result p {
   font-size: 2rem;
   margin-bottom: 3rem;
 }
