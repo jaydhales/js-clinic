@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const resultDiv = document.querySelector(".result");
 const errorDiv = document.querySelector(".error");
+const resultArr = [];
 
 const renderData = (data) => {
   const iconUrl = "http://openweathermap.org/img/wn/";
@@ -59,7 +60,8 @@ const fetchData = async (city) => {
 };
 
 const showResult = (data) => {
-  resultDiv.innerHTML += renderData(data);
+  resultArr.unshift(renderData(data));
+  resultDiv.innerHTML = resultArr.join(" ");
 };
 
 const showError = (message) => {
